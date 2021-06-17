@@ -1,29 +1,12 @@
 <script>
-  import { onMount } from "svelte";
-  import { sequence_store } from "./stores";
+  import PulseKeeper from "./components/PulseKeeper.svelte";
   import Sequence from "./components/Sequence.svelte";
-  import TimeKeeper from "./components/TimeKeeper.svelte";
-
-  let steps = 8;
-
-  onMount(() => {
-    for (let i = 0; i < steps; i++) {
-      $sequence_store[i] = randomStep(i);
-    }
-  });
-
-  function setSteps(event) {
-    steps = event.detail.steps;
-  }
-
-  function randomStep(id) {
-    return { id, active: Math.random() > 0.5 ? true : false };
-  }
 </script>
 
 <main>
-  <TimeKeeper on:steps={setSteps} />
-  <Sequence {steps} />
+  <PulseKeeper />
+  <Sequence id={0} />
+  <Sequence id={1} />
 </main>
 
 <style>
