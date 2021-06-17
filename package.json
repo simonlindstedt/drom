@@ -3,10 +3,12 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "servor": "npx servor ./dist index.html 4000",
+    "clean": "rm -rf ./dist"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.7",
+    "@sveltejs/vite-plugin-svelte": "^1.0.0-next.11",
     "svelte": "^3.37.0",
     "vite": "^2.3.7"
   }
