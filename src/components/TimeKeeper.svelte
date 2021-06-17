@@ -1,34 +1,36 @@
 <script>
   import { createEventDispatcher } from "svelte";
+  import { count, playing } from "../stores";
   import Button from "./Button.svelte";
   const dispatch = createEventDispatcher();
 
-  let running = false;
-  let count = 0;
+  let current_count;
+  let isPlaying;
+
+  count.subscribe((value) => (current_count = value));
+  playing.subscribe((value) => (isPlaying = value));
 
   let tempo = 120;
   let steps = 8;
   let noteLength = 1;
 
   $: bpmToMil = (60000 / tempo) * (1 / noteLength);
-  $: if (running) play();
+  $: if (isPlaying) play();
 
   function note(length) {
     return new Promise((resolve) => {
-      count++;
-      if (count >= steps) count = 0;
+      current_count++;
+      if (current_count >= steps) current_count = 0;
       setTimeout(() => {
-        dispatch("step", {
-          count,
-        });
+        count.set(current_count);
         resolve();
       }, length);
     });
   }
 
   async function play() {
-    while (running) {
-      if (running) {
+    while (isPlaying) {
+      if (isPlaying) {
         await note(bpmToMil);
       } else {
         return;
@@ -40,11 +42,11 @@
 <section>
   <Button
     handleClick={() => {
-      running = !running;
+      playing.set(!$playing);
     }}
     size="large"
   >
-    {running ? "pause" : "play"}
+    {isPlaying ? "pause" : "play"}
   </Button>
   <div>
     <label for="steps">steps</label>

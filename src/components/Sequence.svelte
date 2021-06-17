@@ -1,24 +1,21 @@
 <script>
+  import { count, sequence_store } from "../stores";
   import Step from "./Step.svelte";
 
-  export let steps = 0;
-  export let count = 0;
-  let sequence = [];
+  export let steps;
+  let current_sequence = [];
 
-  $: currentCount = count;
-  $: currentLength = steps;
-
-  $: if (steps) sequence = [];
-  $: for (let i = 0; i < currentLength; i++) {
-    let step = { active: true };
-    sequence[i] = step;
-    sequence = sequence;
+  $: if (steps) {
+    if (steps > $sequence_store.length) {
+      $sequence_store.push({ id: steps, active: false });
+    }
+    current_sequence = $sequence_store.slice(0, steps);
   }
 </script>
 
 <section>
-  {#each sequence as { active }, i}
-    <Step id={i} count={currentCount} {active} />
+  {#each current_sequence as { active }, i}
+    <Step id={i} count={$count} {active} />
   {/each}
 </section>
 

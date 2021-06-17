@@ -1,12 +1,15 @@
 <script>
-  export let id = 0;
+  import { sequence_store, playing } from "../stores";
+
+  export let id;
   export let active;
   export let count;
 
-  $: if (count === id && active) console.log("hello from ", id);
+  $: if (count === id && active && $playing) console.log("hello from ", id);
 
   function toggleActive() {
     active = !active;
+    $sequence_store[id] = { id, active };
   }
 </script>
 
