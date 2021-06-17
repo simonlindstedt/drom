@@ -1,12 +1,18 @@
 <script>
-  export let id = 0;
+  import { sequence_store, playing } from "../stores";
+  import { createEventDispatcher } from "svelte";
+
+  export let id;
   export let active;
   export let count;
 
-  $: if (count === id && active) console.log("hello from ", id);
+  const dispatch = createEventDispatcher();
+
+  // $: if (count === id && active && $playing);
 
   function toggleActive() {
     active = !active;
+    dispatch("state", { id, active });
   }
 </script>
 

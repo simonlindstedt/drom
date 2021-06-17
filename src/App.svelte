@@ -1,21 +1,12 @@
 <script>
+  import PulseKeeper from "./components/PulseKeeper.svelte";
   import Sequence from "./components/Sequence.svelte";
-  import TimeKeeper from "./components/TimeKeeper.svelte";
-  let count = 0;
-  let steps = 8;
-
-  function setCount(event) {
-    count = event.detail.count;
-  }
-
-  function setSteps(event) {
-    steps = event.detail.steps;
-  }
 </script>
 
 <main>
-  <TimeKeeper on:step={setCount} on:steps={setSteps} />
-  <Sequence {count} {steps} />
+  <PulseKeeper />
+  <Sequence id={0} />
+  <Sequence id={1} />
 </main>
 
 <style>
